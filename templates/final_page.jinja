@@ -14,7 +14,7 @@
         <div class="container">
             
             <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-              <h1 class="display-4">Grocery List</h1>
+              <h1 class="display-4">Your Grocery List</h1>
             </div>
 
             <div class="row text-center">
@@ -25,7 +25,9 @@
                     </div>
                     <div class="list-group mb-3">
                         {% for item in calc.basket %}
-                            <div class="list-group-item d-flex justify-content-between lh-condensed">{{ item.name }} {{ item.serving }}</div>
+                            <div class="list-group-item d-flex justify-content-between lh-condensed">
+                                <span>{{ item.name }}</span> ({{ item.serving }})
+                            </div>
                         {% endfor %}
                     </div>
                     <div>
