@@ -18,7 +18,8 @@ Poverty Macros Calculator
 {% block content %}
 <form action="{{ url_for('calculate') }}" method=post>
 <div class="col-5">
-<div class="form-group"> <!--<label for="calories">Amount of Calories</label>--> <!--<input type="calories" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter amount of calories">--> <label for="fat">Amount of Fat</label>
+<div class="form-group">
+<label for="fat">Amount of Fat</label>
 <input name= "fat" type="fat" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter amount of fat">
 <label for="carbs">Amount of Carbs</label>
 <input name= "carbs" type="carbs" class="form-control" aria-describedby="emailHelp" placeholder="Enter amount of carbs">

@@ -19,7 +19,15 @@ def index():
 
 @app.route('/calculate', methods=['POST'])
 def calculate():
-    print(request.form)
+    input = request.form
+    print(input)
+    calories = int(input['carbs']) * 4 + int(input['fat']) * 9 + int(input['protein']) * 4
+    with open('bulking-a', 'w') as f:
+        f.write("{},{},{},{}\n".format(
+            "~" + str(calories),
+            "~" + input['carbs'],
+            ">" + input['fat'],
+            ">" + input['protein']
+            ))
     data = budget_calc.main("food-db", "bulking-a")
-    print(data)
     return render_template('final_page.jinja', data=data)
