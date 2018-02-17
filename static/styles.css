@@ -78,5 +78,37 @@ p{margin-bottom:.3em;}
 }
 
 .bg-mnc {
-	background-color: #ff5e11;
+	background-color: #2ea223;
+}
+
+.card.mt-5 form {
+	padding: 15;
+}
+
+.col-lg-7 {
+	margin: auto;
+}
+
+.col-5 {
+	padding: 0;
+}
+
+.btn-primary {
+	margin-top: 15;
+	background-color: #969696;
+	border-color: #878787;
+}
+
+.smart-logo {
+	max-width: 15%;
+	padding-top: 15;
+	padding-left: 10;
+}
+
+.mt-5 {
+	margin-top: 20 !important
+}
+
+.mt-4 {
+	margin-top: 15 !important
 }
