@@ -8,6 +8,7 @@ from flask_googlemaps import Map, icons
 import googlemaps
 from datetime import datetime
 import pprint
+import budget_calc
 app = Flask(__name__)
 
 
@@ -19,5 +20,6 @@ def index():
 @app.route('/calculate', methods=['POST'])
 def calculate():
     print(request.form)
-    data = {}
+    data = budget_calc.main("food-db", "bulking-a")
+    print(data)
     return render_template('final_page.jinja', data=data)

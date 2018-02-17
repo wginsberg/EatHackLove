@@ -11,7 +11,11 @@
 	</head>
 
 	<body>
-	here
+    <ul id="navigation">
+    {% for food in data %}
+        <li><a> {{ food.name }}{{ food.serving }}</a></li>
+    {% endfor %}
+    </ul>
 	</body>
 
 </html>
