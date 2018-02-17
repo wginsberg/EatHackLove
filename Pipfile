@@ -1,0 +1,23 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[dev-packages]
+
+
+
+[packages]
+
+flask = "*"
+flask-bootstrap = "*"
+pandas = "*"
+flask-googlemaps = "*"
+googlemaps = "*"
+
+
+[requires]
+
+python_version = "3.6"
