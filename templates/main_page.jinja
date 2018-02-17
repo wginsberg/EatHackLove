@@ -1,5 +1,6 @@
 <html>
 <head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous" type="text/javascript">
 </script>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -16,19 +17,45 @@ Poverty Macros Calculator
 <body>
 {% block navbar %} {% endblock %}
 {% block content %}
+
+<div class="col-lg-7">
+	<div class="card mt-5">
+		<h3 class="card-header text-white bg-mnc">Poverty MacroNutrient Calculator(PMC)</h1>
 <form action="{{ url_for('calculate') }}" method=post>
+<h2 class="mt-4">Set your MacroNutrient Goal<span data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Adjust the ratios by either using the sliders or presets to find gram amounts per macronutrient for the given ratio and daily calorie amount."><i class="fa fa-info-circle" aria-hidden="true"></i></span><span class="float-right">
+<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" _vimium-has-onclick-listener="">
+  Ratio Presets
+</button>
+<span class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(401px, 228px, 0px); top: 0px; left: 0px; will-change: transform;">
+  <span class="dropdown-header">Carbohydrate/Protein/Fat</span>
+  <a class="dropdown-item" href="#" onclick="setMacros(60,25,15);">60/25/15 (High Carb)</a>
+  <a class="dropdown-item" href="#" onclick="setMacros(50,30,20);">50/30/20 (Moderate)</a>
+  <a class="dropdown-item" href="#" onclick="setMacros(25,45,30);">25/45/30 (Low Carb)</a>
+  <a class="dropdown-item" href="#" onclick="setMacros(10,15,75);">10/15/75 (High Fat)</a>
+</span>
+</span></h2>
 <div class="col-5">
 <div class="form-group">
 <label for="fat">Amount of Fat</label>
-<input name= "fat" value="60" type="fat" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter amount of fat">
+<input id="fat" name= "fat" value="60" type="fat" class="form-control" aria-describedby="emailHelp" placeholder="Enter amount of fat">
 <label for="carbs">Amount of Carbs</label>
-<input name= "carbs" value="200" type="carbs" class="form-control" aria-describedby="emailHelp" placeholder="Enter amount of carbs">
+<input id="carbs" name= "carbs" value="200" type="carbs" class="form-control" aria-describedby="emailHelp" placeholder="Enter amount of carbs">
 <label for="protein">Amount of Protein</label>
-<input name="protein" value="200" type="protein" class="form-control" aria-describedby="emailHelp" placeholder="Enter amount of protein">
+<input name="protein" id="protein" value="200" type="protein" class="form-control" aria-describedby="emailHelp" placeholder="Enter amount of protein">
 <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+		</div>
+	</div>
+</div>
 </div>
 {% endblock %}
 
+<script>
+	function setMacros(carbs, fat, protein) {
+		document.getElementById("fat").value = fat;
+		document.getElementById("protein").value = protein;
+		document.getElementById("carbs").value = carbs;
+	}
+</script
 </body>
 </html>

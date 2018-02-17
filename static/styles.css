@@ -1,0 +1,82 @@
+.cc-selector input{
+    margin:0;padding:0;
+    -webkit-appearance:none;
+       -moz-appearance:none;
+            appearance:none;
+}
+.cc-selector input:active +.drinkcard-cc{opacity: .9;}
+.cc-selector input:checked +.drinkcard-cc{
+    -webkit-filter: none;
+       -moz-filter: none;
+            filter: none;
+}
+.adult{background-image:url(General.svg);}
+.infant{background-image:url(Infant.svg);}
+.child{background-image:url(Child.svg);}
+.senior{background-image:url(Senior.svg);}
+.head{background-image:url(Head.svg);}
+.chest{background-image:url(Chest.svg);}
+.abdomen{background-image:url(Abdomin.svg);}
+.extremities{background-image:url(Extremities.svg);}
+.low-fever{background-image:url(Low_Fever.svg);}
+.high-fever{background-image:url(High_Fever.svg);}
+.breathing{background-image:url(Breathing.svg);}
+.cough{background-image:url(Cough.svg);}
+.sprain{background-image:url(Sprain.svg);}
+.broken{background-image:url(Broken.svg);}
+.rash{background-image:url(Rash.svg);}
+.poison{background-image:url(Poison.svg);}
+.vomiting{background-image:url(Vomiting.svg);}
+.diarrhea{background-image:url(Diarheah.svg);}
+.medicine{background-image:url(Medicine.svg);}
+.burn{background-image:url(Burn.svg);}
+
+.drinkcard-cc{
+    cursor:pointer;
+    background-size:contain;
+    background-repeat:no-repeat;
+    display:inline-block;
+    width:100px;height:70px;
+    -webkit-transition: all 100ms ease-in;
+       -moz-transition: all 100ms ease-in;
+            transition: all 100ms ease-in;
+    -webkit-filter: brightness(0.8) grayscale(1) opacity(1);
+       -moz-filter: brightness(0.8) grayscale(1) opacity(1);
+            filter: brightness(0.8) grayscale(1) opacity(1);
+}
+.drinkcard-cc:hover{
+    -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
+       -moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
+            filter: brightness(1.2) grayscale(.5) opacity(.9);
+}
+
+/* Extras */
+a:visited{color:#888}
+a{color:#444;text-decoration:none;}
+p{margin-bottom:.3em;}
+
+.selector-center {
+	margin: auto;
+	width: 80%;
+	padding: 10px;
+}
+.selector-center-fever {
+	margin: auto;
+	width: 41%;
+}
+.pain-center{
+	margin: auto;
+	width: 41%;
+}
+.button-submit-center{
+	margin: auto;
+	width: 30%;
+}
+
+.radio-title {
+	text-align: center;
+}
+
+.bg-mnc {
+	background-color: #ff5e11;
+}
