@@ -22,9 +22,11 @@ def build_foods(filename):
             (name, NF, LBW, MTR, amount, serving, unit,
              calories, carbs, fat, protein) = line.strip().split(',')
             food['name'] = name
-            food['serving_cost_NF'] = float(NF) * float(serving) / float(amount)
-            food['serving_cost_LBW'] = float(LBW) * float(serving) / float(amount)
-            food['serving_cost_MTR'] = float(MTR) * float(serving) / float(amount)
+            food['item_cost_NF'] = float(NF)
+            food['item_cost_LBW'] = float(LBW)
+            food['item_cost_MTR'] = float(MTR)
+            food['item_size'] = float(amount)
+            food['serving'] = float(serving)
             food['serving_size'] = serving + ' ' + unit
             food['calories'] = float(calories)
             food['carbs'] = float(carbs)
@@ -69,6 +71,12 @@ def cost(foods, foods_used):
     cost = 0.00
     for i, count in foods_used.items():
         cost += (foods[i]['serving_cost'] * count)
+    return cost
+
+def basket_cost(foods, foods_used):
+    cost = 0.00
+    for i, count in foods_used.items():
+        cost += foods[i]['item_cost']
     return cost
 
 
@@ -625,7 +633,12 @@ def main(food_file, goal_file):
         print("Calculating for store: {}".format(store))
 
         for food in foods:
-            food["serving_cost"] = food["serving_cost_{}".format(store)]
+            item_cost = food["item_cost_{}".format(store)]
+            item_size = food["item_size"]
+            serving_size = food["serving"]
+        
+            food["item_cost"] = item_cost
+            food["serving_cost"] = item_cost * serving_size / item_size
 
         print('==========================================')
         print('BRUTE FORCE, ALL MACROS')
@@ -667,7 +680,8 @@ def main(food_file, goal_file):
 
         result.append({
                 "store": store,
-                "basket": summarize(foods, foods_used)
+                "basket": summarize(foods, foods_used),
+                "total": "{:.2f}".format(basket_cost(foods, foods_used))
         })
 
     return result
