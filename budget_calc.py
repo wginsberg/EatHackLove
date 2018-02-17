@@ -584,105 +584,26 @@ def dp_all(foods, cal_goal, pro_goal, carb_goal, fat_goal):
     return foods_used[cal_goal - 1][pro_goal - 1][carb_goal - 1][fat_goal - 1]
 
 
-def main():
-    """Main wrapper."""
-    args = parser.parse_args()
+def summarize(all_foods, foods_used):
+    summary = []
+    for food in foods_used:
+        summary.append({
+            'name': all_foods[food]['name'],
+            'serving': "{} x {}".format(
+                foods_used[food],
+                all_foods[food]['serving_size'])
+            })
+    return summary
 
-    foods = build_foods(args.foods[0])
-    goals = build_goals(args.goals[0])
+def main(food_file, goal_file):
+    """Main wrapper."""
+
+    foods = build_foods(food_file)
+    goals = build_goals(goal_file)
 
     print('GOALS:')
     for macro in sorted(goals.keys()):
         print(' -> {}: {}'.format(macro, int(goals[macro])))
-
-    # print('==========================================')
-    # print('DYNAMIC PROGRAMMING, CALORIES ONLY')
-    # t = time.process_time()
-    # foods_used = dp_calories_only(foods, int(goals['calories']))
-    # elapsed = time.process_time() - t
-    # print('Performance: {0:.4f} s'.format(elapsed))
-    # print('---------')
-    # print('Cost:     ${0:.2f}'.format(cost(foods, foods_used)))
-    # print('Calories: {} cal'.format(int(calories(foods, foods_used))))
-    # print('Protein:  {} g'.format(int(protein(foods, foods_used))))
-    # print('Carbs:    {} g'.format(int(carbs(foods, foods_used))))
-    # print('Fat:      {} g'.format(int(fat(foods, foods_used))))
-    # print('Using:')
-    # for i, count in foods_used.items():
-    #     print(' -> {}: {} x {}'.format(foods[i]['name'], count,
-    #                                    foods[i]['serving_size']))
-    #
-    # print('==========================================')
-    # print('BRUTE FORCE, CALORIES ONLY')
-    # t = time.process_time()
-    # foods_used = brute_force_calories_only(foods, 0, goals['calories'])
-    # elapsed = time.process_time() - t
-    # print('Performance: {0:.4f} s'.format(elapsed))
-    # print('---------')
-    # print('Cost:     ${0:.2f}'.format(cost(foods, foods_used)))
-    # print('Calories: {} cal'.format(int(calories(foods, foods_used))))
-    # print('Protein:  {} g'.format(int(protein(foods, foods_used))))
-    # print('Carbs:    {} g'.format(int(carbs(foods, foods_used))))
-    # print('Fat:      {} g'.format(int(fat(foods, foods_used))))
-    # print('Using:')
-    # for i, count in foods_used.items():
-    #     print(' -> {}: {} x {}'.format(foods[i]['name'], count,
-    #                                    foods[i]['serving_size']))
-    #
-    # print('==========================================')
-    # print('DYNAMIC PROGRAMMING, CALORIES AND PROTEIN ONLY')
-    # t = time.process_time()
-    # foods_used = dp_cal_and_pro_only(
-    #     foods, int(goals['calories']), int(goals['protein']))
-    # elapsed = time.process_time() - t
-    # saved_elapsed = elapsed
-    # print('Performance: {0:.4f} s'.format(elapsed))
-    # print('---------')
-    # print('Cost:     ${0:.2f}'.format(cost(foods, foods_used)))
-    # print('Calories: {} cal'.format(int(calories(foods, foods_used))))
-    # print('Protein:  {} g'.format(int(protein(foods, foods_used))))
-    # print('Carbs:    {} g'.format(int(carbs(foods, foods_used))))
-    # print('Fat:      {} g'.format(int(fat(foods, foods_used))))
-    # print('Using:')
-    # for i, count in foods_used.items():
-    #     print(' -> {}: {} x {}'.format(foods[i]['name'], count,
-    #                                    foods[i]['serving_size']))
-    #
-    # print('==========================================')
-    # print('BRUTE FORCE, CALORIES AND PROTEIN ONLY')
-    # t = time.process_time()
-    # foods_used = brute_force_cal_and_pro_only(
-    #     foods, 0, goals['calories'], goals['protein'])
-    # elapsed = time.process_time() - t
-    # print('Performance: {0:.4f} s'.format(elapsed))
-    # print('---------')
-    # print('Cost:     ${0:.2f}'.format(cost(foods, foods_used)))
-    # print('Calories: {} cal'.format(int(calories(foods, foods_used))))
-    # print('Protein:  {} g'.format(int(protein(foods, foods_used))))
-    # print('Carbs:    {} g'.format(int(carbs(foods, foods_used))))
-    # print('Fat:      {} g'.format(int(fat(foods, foods_used))))
-    # print('Using:')
-    # for i, count in foods_used.items():
-    #     print(' -> {}: {} x {}'.format(foods[i]['name'], count,
-    #                                    foods[i]['serving_size']))
-
-    # print('==========================================')
-    # print('DYNAMIC PROGRAMMING, ALL MACROS')
-    # t = time.process_time()
-    # foods_used = dp_all(
-    #     foods, int(goals['calories']), int(goals['protein']),
-    #     int(goals['carbs']), int(goals['fat']))
-    # elapsed = time.process_time() - t
-    # print('Performance: {0:.4f} s'.format(elapsed))
-    # print('Cost:     ${0:.2f}'.format(cost(foods, foods_used)))
-    # print('Calories: {} cal'.format(int(calories(foods, foods_used))))
-    # print('Protein:  {} g'.format(int(protein(foods, foods_used))))
-    # print('Carbs:    {} g'.format(int(carbs(foods, foods_used))))
-    # print('Fat:      {} g'.format(int(fat(foods, foods_used))))
-    # print('Using:')
-    # for i, count in foods_used.items():
-    #     print(' -> {}: {} x {}'.format(foods[i]['name'], count,
-    #                                    foods[i]['serving_size']))
 
     print('==========================================')
     print('BRUTE FORCE, ALL MACROS')
@@ -703,25 +624,26 @@ def main():
         print(' -> {}: {} x {}'.format(foods[i]['name'], count,
                                        foods[i]['serving_size']))
 
-    print('==========================================')
-    print('DYNAMIC PROGRAMMING (TOP-DOWN), ALL MACROS')
-    t = time.process_time()
-    foods_used = dp_all_td(
-        foods, 0, goals['calories'], goals['protein'], goals['fat'],
-        goals['carbs'])
-    elapsed = time.process_time() - t
-    print('Performance: {0:.4f} s'.format(elapsed))
-    print('---------')
-    print('Cost:     ${0:.2f}'.format(cost(foods, foods_used)))
-    print('Calories: {} cal'.format(int(calories(foods, foods_used))))
-    print('Protein:  {} g'.format(int(protein(foods, foods_used))))
-    print('Carbs:    {} g'.format(int(carbs(foods, foods_used))))
-    print('Fat:      {} g'.format(int(fat(foods, foods_used))))
-    print('Using:')
-    for i, count in foods_used.items():
-        print(' -> {}: {} x {}'.format(foods[i]['name'], count,
-                                       foods[i]['serving_size']))
+    #print('==========================================')
+    #print('DYNAMIC PROGRAMMING (TOP-DOWN), ALL MACROS')
+    #t = time.process_time()
+    #foods_used = dp_all_td(
+    #    foods, 0, goals['calories'], goals['protein'], goals['fat'],
+    #    goals['carbs'])
+    #elapsed = time.process_time() - t
+    #print('Performance: {0:.4f} s'.format(elapsed))
+    #print('---------')
+    #print('Cost:     ${0:.2f}'.format(cost(foods, foods_used)))
+    #print('Calories: {} cal'.format(int(calories(foods, foods_used))))
+    #print('Protein:  {} g'.format(int(protein(foods, foods_used))))
+    #print('Carbs:    {} g'.format(int(carbs(foods, foods_used))))
+    #print('Fat:      {} g'.format(int(fat(foods, foods_used))))
+    #print('Using:')
+    #for i, count in foods_used.items():
+    #    print(' -> {}: {} x {}'.format(foods[i]['name'], count,
+    #                                   foods[i]['serving_size']))
 
+    print(summarize(foods, foods_used))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -730,4 +652,5 @@ if __name__ == "__main__":
                         help='File containing food info')
     parser.add_argument('--goals', nargs=1, required=True,
                         help='File containing goal info')
-    main()
+    args = parser.parse_args()
+    main(args.foods[0], args.goals[0])
