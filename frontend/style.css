@@ -1,0 +1,20 @@
+.container {
+}
+
+.prompt {
+    margin: auto;
+    margin-top: 100px;
+    width: 650px;
+    height: 250px;
+    border: 3px solid powderblue;
+    background: lightgrey;
+    padding: 30px 20px 20px 20px; 
+
+    box-shadow: 5px 5px 3px #888888;
+}
+
+.question {
+    font-size: 36px;
+    font-weight: bold;
+    font-family: sans-serif;
+}
