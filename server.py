@@ -10,11 +10,14 @@ from datetime import datetime
 import pprint
 app = Flask(__name__)
 
+
 @app.route('/')
 def index():
     return render_template('main_page.jinja')
 
 
-@app.route('/assessment', methods=['POST'])
-def triage():
-    return render_template('final_page.jinja')
+@app.route('/calculate', methods=['POST'])
+def calculate():
+    print(request.form)
+    data = {}
+    return render_template('final_page.jinja', data=data)
