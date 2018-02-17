@@ -20,7 +20,9 @@
             <div class="row text-center">
                 {% for calc in data %}
                 <div class="card col-sm box-shadow">
-                    <div class="card-header">{{ calc.store }}</div>
+                    <div style="height: 225px; width: 100%; display: block;" class="card-header">
+                        <img class="card-img-top" src="static/{{ calc.store }}.jpg" />
+                    </div>
                     <div class="list-group mb-3">
                         {% for item in calc.basket %}
                             <div class="list-group-item d-flex justify-content-between lh-condensed">{{ item.name }} {{ item.serving }}</div>

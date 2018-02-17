@@ -20,7 +20,7 @@ def index():
 @app.route('/calculate-test', methods=['GET'])
 def calculate_test():
     data = [{   
-                'store': 'metro',
+                'store': 'MTR',
                 'total': 12.99,
                 'basket': [
                         {'name': 'oatmeal', 'serving': ' 2 x 100g'},
@@ -28,7 +28,7 @@ def calculate_test():
                 ]
             },
             {
-                'store': 'no frills',
+                'store': 'NF',
                 'total': 14.25,
                 'basket': [
                         {'name': 'oatmeal', 'serving': ' 2 x 100g'},
@@ -36,7 +36,7 @@ def calculate_test():
                 ]
             },
             {
-                'store': 'no frills',
+                'store': 'LBW',
                 'total': 14.99,
                 'basket': [
                         {'name': 'oatmeal', 'serving': ' 2 x 100g'},
