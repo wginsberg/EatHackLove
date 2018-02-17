@@ -19,10 +19,12 @@ def build_foods(filename):
     with open(filename, 'r') as file:
         for line in file:
             food = {}
-            (name, cost, amount, serving, unit, calories,
-             carbs, fat, protein) = line.strip().split(',')
+            (name, NF, LBW, MTR, amount, serving, unit,
+             calories, carbs, fat, protein) = line.strip().split(',')
             food['name'] = name
-            food['serving_cost'] = float(cost) * float(serving) / float(amount)
+            food['serving_cost_NF'] = float(NF) * float(serving) / float(amount)
+            food['serving_cost_LBW'] = float(LBW) * float(serving) / float(amount)
+            food['serving_cost_MTR'] = float(MTR) * float(serving) / float(amount)
             food['serving_size'] = serving + ' ' + unit
             food['calories'] = float(calories)
             food['carbs'] = float(carbs)
@@ -612,52 +614,68 @@ def main(food_file, goal_file):
 
     foods = build_foods(food_file)
     goals = build_goals(goal_file)
-
+    
     print('GOALS:')
     for macro in sorted(goals.keys()):
         print(' -> {}: {}'.format(macro, int(goals[macro])))
 
-    print('==========================================')
-    print('BRUTE FORCE, ALL MACROS')
-    t = time.process_time()
-    foods_used = brute_force_all(
-        foods, 0, goals['calories'], goals['protein'], goals['fat'],
-        goals['carbs'])
-    elapsed = time.process_time() - t
-    print('Performance: {0:.4f} s'.format(elapsed))
-    print('---------')
-    print('Cost:     ${0:.2f}'.format(cost(foods, foods_used)))
-    print('Calories: {} cal'.format(int(calories(foods, foods_used))))
-    print('Protein:  {} g'.format(int(protein(foods, foods_used))))
-    print('Carbs:    {} g'.format(int(carbs(foods, foods_used))))
-    print('Fat:      {} g'.format(int(fat(foods, foods_used))))
-    print('Using:')
-    for i, count in foods_used.items():
-        print(' -> {}: {} x {}'.format(foods[i]['name'], count,
-                                       foods[i]['serving_size']))
+    result = []
+    for store in ["NF", "LBW", "MTR"]:
 
-    #print('==========================================')
-    #print('DYNAMIC PROGRAMMING (TOP-DOWN), ALL MACROS')
-    #t = time.process_time()
-    #foods_used = dp_all_td(
-    #    foods, 0, goals['calories'], goals['protein'], goals['fat'],
-    #    goals['carbs'])
-    #elapsed = time.process_time() - t
-    #print('Performance: {0:.4f} s'.format(elapsed))
-    #print('---------')
-    #print('Cost:     ${0:.2f}'.format(cost(foods, foods_used)))
-    #print('Calories: {} cal'.format(int(calories(foods, foods_used))))
-    #print('Protein:  {} g'.format(int(protein(foods, foods_used))))
-    #print('Carbs:    {} g'.format(int(carbs(foods, foods_used))))
-    #print('Fat:      {} g'.format(int(fat(foods, foods_used))))
-    #print('Using:')
-    #for i, count in foods_used.items():
-    #    print(' -> {}: {} x {}'.format(foods[i]['name'], count,
-    #                                   foods[i]['serving_size']))
+        print("Calculating for store: {}".format(store))
 
-    return summarize(foods, foods_used)
+        for food in foods:
+            food["serving_cost"] = food["serving_cost_{}".format(store)]
+
+        print('==========================================')
+        print('BRUTE FORCE, ALL MACROS')
+        t = time.process_time()
+        foods_used = brute_force_all(
+            foods, 0, goals['calories'], goals['protein'], goals['fat'],
+            goals['carbs'])
+        elapsed = time.process_time() - t
+        print('Performance: {0:.4f} s'.format(elapsed))
+        print('---------')
+        print('Cost:     ${0:.2f}'.format(cost(foods, foods_used)))
+        print('Calories: {} cal'.format(int(calories(foods, foods_used))))
+        print('Protein:  {} g'.format(int(protein(foods, foods_used))))
+        print('Carbs:    {} g'.format(int(carbs(foods, foods_used))))
+        print('Fat:      {} g'.format(int(fat(foods, foods_used))))
+        print('Using:')
+        for i, count in foods_used.items():
+            print(' -> {}: {} x {}'.format(foods[i]['name'], count,
+                                           foods[i]['serving_size']))
+
+        #print('==========================================')
+        #print('DYNAMIC PROGRAMMING (TOP-DOWN), ALL MACROS')
+        #t = time.process_time()
+        #foods_used = dp_all_td(
+        #    foods, 0, goals['calories'], goals['protein'], goals['fat'],
+        #    goals['carbs'])
+        #elapsed = time.process_time() - t
+        #print('Performance: {0:.4f} s'.format(elapsed))
+        #print('---------')
+        #print('Cost:     ${0:.2f}'.format(cost(foods, foods_used)))
+        #print('Calories: {} cal'.format(int(calories(foods, foods_used))))
+        #print('Protein:  {} g'.format(int(protein(foods, foods_used))))
+        #print('Carbs:    {} g'.format(int(carbs(foods, foods_used))))
+        #print('Fat:      {} g'.format(int(fat(foods, foods_used))))
+        #print('Using:')
+        #for i, count in foods_used.items():
+        #    print(' -> {}: {} x {}'.format(foods[i]['name'], count,
+        #                                   foods[i]['serving_size']))
+
+        result.append({
+                "store": store,
+                "basket": summarize(foods, foods_used)
+        })
+
+    return result
 
 if __name__ == "__main__":
+
+    main('food-db', 'bulking-a')
+    exit(0)
 
     parser = argparse.ArgumentParser(
         description='Calculates cheapest way to satisfy macro requirements.')
