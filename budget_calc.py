@@ -595,6 +595,18 @@ def summarize(all_foods, foods_used):
             })
     return summary
 
+def goal_subtract(goal, all_foods, foods_used):
+    '''
+    Given a goal, subtract macros from it and return a new goal. 
+    '''
+
+    new_goal = {}
+    for macro in goal:
+        new_goal[macro] = sum([all_foods[food][macro] * foods_used[food]
+                                for food in foods_used])
+    return new_goal
+
+
 def main(food_file, goal_file):
     """Main wrapper."""
 
@@ -643,9 +655,10 @@ def main(food_file, goal_file):
     #    print(' -> {}: {} x {}'.format(foods[i]['name'], count,
     #                                   foods[i]['serving_size']))
 
-    print(summarize(foods, foods_used))
+    return summarize(foods, foods_used)
 
 if __name__ == "__main__":
+
     parser = argparse.ArgumentParser(
         description='Calculates cheapest way to satisfy macro requirements.')
     parser.add_argument('--foods', nargs=1, required=True,
