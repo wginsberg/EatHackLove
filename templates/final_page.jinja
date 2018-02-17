@@ -20,8 +20,8 @@
             <div class="row text-center">
                 {% for calc in data %}
                 <div class="card col-sm box-shadow">
-                    <div style="height: 225px; width: 100%; display: block;" class="card-header">
-                        <img class="card-img-top" src="static/{{ calc.store }}.jpg" />
+                    <div style="width: 100%; display: block;" class="card-header">
+                        <img class="card-img-top" src="static/{{ calc.store }}2.jpg" />
                     </div>
                     <div class="list-group mb-3">
                         {% for item in calc.basket %}
@@ -29,8 +29,8 @@
                         {% endfor %}
                     </div>
                     <div>
-                        <div class="card-title pricing-card-title">${{ calc.total }}</div>
-                        <i class="fas fa-shopping-basket fa-7x"></i>
+                        <h1 class="card-title pricing-card-title">${{ calc.total }}</h1>
+                        <i style="color: {{ calc.color }}" class="fas fa-shopping-basket fa-7x"></i>
                     </div>
                 </div>
                 {% endfor %}
