@@ -17,6 +17,35 @@ def index():
     return render_template('main_page.jinja')
 
 
+@app.route('/calculate-test', methods=['GET'])
+def calculate_test():
+    data = [{   
+                'store': 'metro',
+                'total': 12.99,
+                'basket': [
+                        {'name': 'oatmeal', 'serving': ' 2 x 100g'},
+                        {'name': 'olive oil', 'serving': ' 1 x 15ml'}
+                ]
+            },
+            {
+                'store': 'no frills',
+                'total': 14.25,
+                'basket': [
+                        {'name': 'oatmeal', 'serving': ' 2 x 100g'},
+                        {'name': 'olive oil', 'serving': ' 1 x 15ml'}
+                ]
+            },
+            {
+                'store': 'no frills',
+                'total': 14.99,
+                'basket': [
+                        {'name': 'oatmeal', 'serving': ' 2 x 100g'},
+                        {'name': 'olive oil', 'serving': ' 1 x 15ml'}
+                ]
+            }
+    ]
+    return render_template('final_page.jinja', data=data)
+
 @app.route('/calculate', methods=['POST'])
 def calculate():
     input = request.form
